@@ -1,167 +1,68 @@
-//masih belum mengerti harap dimaklumkan terima kasih
+//masih dalam tahap pembelajaran harap dimaklumi terima kasih
 
 #include<iostream>
-#include<conio.h>
-
-#include<stdlib.h>
+#include<iomanip>
+ 
 using namespace std;
 
-struct graph{
-	graph *left;
-	string info;
-	int bobot;
-	graph *right;
-}*PE,*PV,*first,*last,*last1,*baru;
-void newGraph(string data,int nilai);
-
-void verteks();
-void edge();
-void tampil();
-bool isEmpty();
-bool isFull();
-
-string data,v;
-int nilai,maxG,counter;
-
-int main(){
-	int pilih;
-	cout<<"Masukkan Jumlah Data : ";cin>>maxG;
-	system("cls");
+void PrintMat(int **mat, int n)
+{
+	int i, j;
+ 
+	cout<<"\n\n"<<setw(4)<<"";
+	for(i = 0; i < n; i++)
+		cout<<setw(3)<<"("<<i+1<<")";
+	cout<<"\n\n";
+ 
+	for(i = 0; i < n; i++)
+	{
+		cout<<setw(3)<<"("<<i+1<<")";
+		for(j = 0; j < n; j++)
+		{
+			cout<<setw(4)<<mat[i][j];
+		}
+		cout<<"\n\n";
+	}
+}
+ 
+int main()
+{
+	int i, v, e, j, v1, v2;
+	char ulang;
+ 	
 	do{
-		cout<<"MENU GRAPH LIST\n";
-		cout<<"1. Tambah Verteks\n";
-		cout<<"2. Tambahn Edge\n";
-		cout<<"3. Lihat Graph\n";
-		cout<<"4. Exit\n";
-		cout<<"Pilih Menu : ";cin>>pilih;
-		switch(pilih){
-			case 1:
-			system("cls");
-			verteks();
-			system("cls");
-			break;
-			case 2:
-			system("cls");
-			edge();
-			system("cls");
-			break;
-			case 3:
-			system("cls");
-			tampil();
-			system("cls");
-			break;
-			case 4:
-			cout<<"Terima Kasih";
-			break;
-			default:     
-			cout<<"Nomor Yang Anda Masukkan Salah";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+ 		system("cls");
+		cout<<"Masukkan jumlah vertex dalam graf : ";
+		cin>>v;
+ 		
+		int **graph;
+		graph = new int*[v];
+ 		
+		for(i = 0; i < v; i++){
+			graph[i] = new int[v];
+			for(j = 0; j < v; j++)graph[i][j] = 0;
 		}
-	}while(pilih != 4);
-}
-
-bool isEmpty(){
-	if(first == NULL){
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-bool isFull(){
-	if(counter == maxG){
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-void newGraph(string data,int nilai){
-	baru = new graph;//new(instruksi dasar)
-	baru->info = data;//isi data
-	baru->bobot = nilai;
-	baru->left = NULL;//karena terdiri dari 1 node,maka next= null
-	baru->right = NULL;
-}
-void verteks(){
-	if(isFull()){
-		cout<<"Maaf,Verteks Penuh";
-	}
-	else{
-		cout<<"Masukkan Verteks : ";cin>>data;
-		newGraph(data,nilai);
-		if(isEmpty()){
-			first = baru;
-			last = baru;
-			last1 = baru;
+ 		
+		cout<<"\nMasukkan jumlah edge dalam graf : ";
+		cin>>e;
+ 		
+		for(i = 0; i < e; i++){
+			cout<<"\nEdge "<<i+1<<" menghubungkan ";
+			cout<<"Vertex(1): ";
+			cin>>v1;
+			cout<<"dengan Vertex(2): ";
+			cin>>v2;
+						
+			graph[v1-1][v2-1] = 1;
+			graph[v2-1][v1-1] = 1;
 		}
-		else{
-			last->left = baru;
-			last = baru;
-		}
-		counter++;
-		cout<<"Verteks Berhasil Ditambahkan";
+	
+		cout << "\nHasil dari graf adalah : "<<endl;
+			
+		PrintMat(graph, v);
+		
+		cout<<"\nApakah anda ingin mengulangi program?(y/n)  ";
+     	cin>>ulang;
 	}
-	getchar();
-}
-void edge(){
-	if(isEmpty()){
-		cout<<"Maaf,Operasi Tidak Bisa Dilakukan";
-		cout<<"Gunakan Tambah Verteks";
-	}
-	else{
-		PV = first;
-		cout<<"Tentukan Verteks : ";cin>>v;
-		while(PV != NULL){
-			if(PV->info != v){
-				PV = PV->left;
-				last1 = PV;
-				if(PV == NULL){
-					cout<<"Maaf,Verteks Tidak ada";
-				}
-			}
-			else{
-				cout<<"Edge Akan Ditambahkan Ke Verteks : "<<v<<"\n";
-				cout<<"Masukkan Edge : ";cin>>data;
-				cout<<"Masukkan Bobot : ";cin>>nilai;
-				newGraph(data,nilai);
-				last1->right = baru;
-				last1 = baru;
-				cout<<"Tentukan Hubungan : ";cin>>v;
-				while(PV != NULL){
-					if(PV->info != v){
-						PV = PV->left;
-						if(PV == NULL){
-							cout<<"Maaf,Verteks Tidak ada";
-						}
-					}
-					else{
-						baru->left = PV;
-						cout<<"Edge Berhasil Ditambahkan";
-						break;
-					}
-				}
-				break;
-			}
-		}
-	}	
-getchar();
-}
-void tampil(){
-	if(isEmpty()){
-		cout<<"Maaf,Graph Kosong";
-	}
-	else{
-		PV = first;
-		while (PV != NULL){
-			cout<<"Verteks "<<PV->info;
-			PE = PV->right;
-			while(PE != NULL){
-				cout<<", Berhubungan Melalui "<<PE->info<<" Dengan "<<PE->left->info<<" Berbobot "<<PE->bobot;
-				PE = PE->right;
-			}
-			cout<<endl;
-			PV = PV->left;
-		}
-	}
-	getchar();
+	while(ulang=='y' || ulang=='Y');
 }
